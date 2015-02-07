@@ -1,0 +1,57 @@
+
+package sosi;
+
+import java.util.*;
+import java.io.*;
+
+
+public class SoSi {
+
+
+    public static void main(String[] args) {
+        String content = new String();
+        String value = new String();
+        //File file = new File("sosi.txt");
+        LinkedList<String> source = new LinkedList<String>();
+        LinkedList<String> sink = new LinkedList<String>();
+        try {
+            FileInputStream fstream = new FileInputStream("sosi.txt");
+BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+            while ((value = br.readLine()) != null) {
+                
+                if (value.contains("_SOURCE_")) {
+                    content = value;
+                    content = content.replace("-> _SOURCE_", " ");
+                    source.add(content);
+                } else {
+                    content = value;
+                    content = content.replace("-> _SINK_", " ");
+                    sink.add(content);
+                }
+            }
+            br.close();
+        } catch (FileNotFoundException fnf) {
+            fnf.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("\nProgram terminated Safely...");
+        }
+
+        Iterator i = source.iterator();
+        int count = 0;
+        while (i.hasNext()) {
+            System.out.print("source " + (count++) + " : ");
+            System.out.println(i.next());
+        }
+
+        System.out.println();
+
+        Iterator p = sink.iterator();
+        int coun = 0;
+        while (p.hasNext()) {
+            System.out.print("sink " + (coun++) + " : ");
+            System.out.println(p.next());
+        }
+    }
+
+}
